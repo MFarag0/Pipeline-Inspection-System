@@ -1,6 +1,6 @@
-## Pipeline Inspection System
+# Pipeline Inspection System
 
-# Overview
+## Overview
 This project takes the WonderPi MasterPI, a commercial robotics chassis, and repurposes it into a fully specialized, independently engineered robotic system. While the MasterPI platform provides a strong mechanical foundation
 — a rigid chassis, a built-in Li-ion battery pack, and four mecanum wheels for omnidirectional movement — its stock control hat limits customization and flexibility over how the robot's subsystems are wired together and 
 controlled. To overcome this, the stock hat was removed entirely and replaced with a Raspberry Pi 5, giving full control over every layer of the system: from low-level motor and servo signaling to networking and vision 
@@ -13,15 +13,30 @@ Development followed a hardware-first approach, with subsystems built and valida
 camera integration for vision capabilities, and finally the user-interface, where two versions were created: an app built from Javascript, and an app built from Matlab App Designer, and wireless connectivity layer that 
 ties everything together. The result is a robot that retains the mechanical robustness of a commercial platform while gaining the flexibility, precision, and extensibility of a fully custom-built control system.
 
-# Hardware Stack
+## Hardware Stack
 
-<img width="621" height="689" alt="image" src="https://github.com/user-attachments/assets/b9a87918-15cb-4586-9586-70422dcdba84" />
+| Subsystem | Components | Notes |
+|---|---|---|
+| **Chassis** | WonderPi MasterPI base, mecanum wheels, built-in Li-ion battery pack | Provides mechanical foundation; stock control hat removed |
+| **Compute** | Raspberry Pi 5 | Central controller for motors, servos, camera, and networking |
+| **Drive Motors** | 4x DC motors (mecanum wheels), 2x L298N motor driver modules | Each L298N drives 2 motors; 8 GPIO pins for direction (2 per motor) + 1 PWM output for shared speed control; enables strafing, rotation, and diagonal motion |
+| **Motor Power** | 2x 3.7V Li-ion cells in series (~6V), PWM-regulated | Powers motors directly, isolated from Pi's power rail to prevent brownouts |
+| **Robotic Arm** | 5x servo motors, 16-channel PWM servo controller (I2C) | Servos wired to channels 0, 2, 4, 6, 8 for a clean claw-to-base mapping; controller communicates via SDA/SCL, offloading PWM generation from the Pi to eliminate jitter |
+| **Servo Power** | Adjustable buck converter | Steps battery voltage down to a clean, isolated 5V rail for the servo controller and servos |
+| **Pi Power** | Dedicated high-capacity power bank | Powers the Pi 5 via USB-C independently of the servo/motor rails, ensuring stable supply during compute-heavy tasks (e.g., vision processing) |
+| **Vision** | USB camera | Direct USB connection to the Pi; used with OpenCV for line following, color detection, and general vision tasks |
 
-# Software Stack
+## Software Stack
 
-<img width="623" height="304" alt="image" src="https://github.com/user-attachments/assets/0ae38a83-5e38-4322-a726-5a315a6e854a" />
+| Software | Role |
+|---|---|
+| **Python 3** | Server-side logic on the Raspberry Pi 5; handles GPIO/motor/servo control and networking (`asyncio` for the control server, HTTP for the camera stream) |
+| **HTML, CSS, JavaScript** | Used to build a web interface to operate the robot |
+| **MATLAB** | Client-side networking (`tcpclient` for TCP/IP control commands, `imread` for pulling camera frames over HTTP) |
+| **MATLAB App Designer** | Builds the GUI (buttons, sliders, connection controls) used to operate the robot |
+| **Raspberry Pi OS** | Host OS for all server-side code; provides GPIO/hardware access |
 
-# How It Works
+## How It Works
 The system uses a client-server architecture:
 
 1. Client (Web App / MATLAB GUI): Runs on a laptop/desktop. Every user action (e.g., pressing "Forward," adjusting a servo slider) is translated into a text command such as MOVE FWD or SERVO 2 90.
@@ -31,6 +46,6 @@ The system uses a client-server architecture:
 Running movement/servo control and the camera feed as two independent servers lets the robot handle both simultaneously without one blocking the other — giving the user uninterrupted control and a live video feed at the 
 same time.
 
-# Summary
+## Summary
 By combining the WonderPi MasterPI's mechanical base with a Raspberry Pi 5, dual motor drivers, a dedicated servo controller, isolated power regulation, and a Python/MATLAB client-server stack, this project transforms a 
 commercial robotics kit into a fully custom platform capable of precise omnidirectional movement, smooth 5-DOF arm actuation, and real-time remote-controlled vision.
