@@ -12,6 +12,8 @@ Development followed a hardware-first approach, with subsystems built and valida
 camera integration for vision capabilities, and finally the user-interface, where two versions were created: an app built from Javascript, and an app built from Matlab App Designer, and wireless connectivity layer that 
 ties everything together. The result is a robot that retains the mechanical robustness of a commercial platform while gaining the flexibility, precision, and extensibility of a fully custom-built control system.
 
+<img width="934" height="664" alt="image" src="https://github.com/user-attachments/assets/35262f48-26ba-4640-85db-9ea5000a299b" />
+
 ## Hardware Stack
 
 | Subsystem | Components | Notes |
