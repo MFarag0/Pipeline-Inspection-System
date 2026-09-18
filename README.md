@@ -1,8 +1,7 @@
 # Pipeline Inspection System
 
 ## Overview
-This project takes the WonderPi MasterPI, a commercial robotics chassis, and repurposes it into a fully specialized, independently engineered robotic system. While the MasterPI platform provides a strong mechanical foundation
-— a rigid chassis, a built-in Li-ion battery pack, and four mecanum wheels for omnidirectional movement — its stock control hat limits customization and flexibility over how the robot's subsystems are wired together and 
+This project takes the WonderPi MasterPI, a commercial robotics chassis, and repurposes it into a fully specialized, independently engineered robotic system. While the MasterPI platform provides a strong mechanical foundation a rigid chassis, a built-in Li-ion battery pack, and four mecanum wheels for omnidirectional movement, its stock control hat limits customization and flexibility over how the robot's subsystems are wired together and 
 controlled. To overcome this, the stock hat was removed entirely and replaced with a Raspberry Pi 5, giving full control over every layer of the system: from low-level motor and servo signaling to networking and vision 
 processing.
 
